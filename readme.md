@@ -1,17 +1,10 @@
 # Better localization management for Laravel
 
-[![Latest Version on Packagist](https://img.shields.io/packagist/v/waavi/translation.svg?style=flat-square)](https://packagist.org/packages/waavi/translation)
-[![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](LICENSE.md)
-[![Build Status](https://img.shields.io/travis/Waavi/translation/master.svg?style=flat-square)](https://travis-ci.org/Waavi/translation)
-[![Total Downloads](https://img.shields.io/packagist/dt/waavi/translation.svg?style=flat-square)](https://packagist.org/packages/waavi/translation)
-
 ## Introduction
 
 Keeping a project's translations properly updated is cumbersome. Usually translators do not have access to the codebase, and even when they do it's hard to keep track of which translations are missing for each language or when updates to the original text require that translations be revised.
 
 This package allows developers to leverage their database and cache to manage multilanguage sites, while still working on language files during development and benefiting from all the features Laravel's Translation bundle has, like pluralization or replacement.
-
-WAAVI is a web development studio based in Madrid, Spain. You can learn more about us at [waavi.com](http://waavi.com)
 
 ## Table of contents
 
@@ -52,13 +45,12 @@ WAAVI is a web development studio based in Madrid, Spain. You can learn more abo
 
 Require through composer
 
-
-	composer require waavi/translation 2.3.x
+	composer require 10pearls/laravel-multilingual 2.3.x
 
 Or manually edit your composer.json file:
 
 	"require": {
-		"waavi/translation": "2.3.x"
+		"10pearls/laravel-multilingual": "2.3.x"
 	}
 
 Once installed, in your project's config/app.php file replace the following entry from the providers array:
