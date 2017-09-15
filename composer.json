@@ -1,8 +1,8 @@
 {
-    "name": "waavi/translation",
+    "name": "10pearls/laravel-multilingual",
     "description": "A Translation package for Laravel 5 with database and cache support",
     "keywords": [
-        "waavi",
+        "10pearls",
         "laravel-translator",
         "laravel",
         "translator",
@@ -12,9 +12,9 @@
     "license": "MIT",
     "authors": [
         {
-            "name": "Waavi",
-            "email": "info@waavi.com",
-            "homepage": "http://waavi.com"
+            "name": "10pearls",
+            "email": "sabieh.ahmed@tenpearls.com",
+            "homepage": "https://10pearls.com"
         }
     ],
     "require": {
