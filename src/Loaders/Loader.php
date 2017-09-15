@@ -38,7 +38,7 @@ abstract class Loader implements LoaderContract
     {
         if ($locale != $this->defaultLocale) {
             return array_replace_recursive(
-                $this->loadSource($this->defaultLocale, $group, $namespace),
+                //$this->loadSource($this->defaultLocale, $group, $namespace),
                 $this->loadSource($locale, $group, $namespace)
             );
         }
