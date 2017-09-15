@@ -20,7 +20,7 @@
     "require": {
         "laravel/framework": "~5.5",
         "doctrine/dbal": "^2.5",
-        "10pearls/laravel-multilingual": "master"
+        "10pearls/laravel-multilingual": "dev-master"
     },
     "require-dev": {
         "phpunit/phpunit" : "~6.0",
@@ -37,7 +37,7 @@
             "Waavi\\Translation\\Test\\": "tests"
         }
     },
-    "minimum-stability": "stable",
+    "minimum-stability": "dev",
     "scripts": {
         "test": "vendor/bin/phpunit"
     }
