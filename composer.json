@@ -1,8 +1,7 @@
 {
-    "name": "10pearls/laravel-multilingual",
+    "name": "careem/laravel-multilingual",
     "description": "A Translation package for Laravel 5 with database and cache support",
     "keywords": [
-        "10pearls",
         "laravel-translator",
         "laravel",
         "translator",
@@ -12,15 +11,15 @@
     "license": "MIT",
     "authors": [
         {
-            "name": "10pearls",
-            "email": "sabieh.ahmed@tenpearls.com",
-            "homepage": "https://10pearls.com"
+            "name": "careem",
+            "email": "aneel.kumar@careem.com",
+            "homepage": "https://careem.com"
         }
     ],
     "require": {
         "laravel/framework": "~5.5",
         "doctrine/dbal": "^2.5",
-        "10pearls/laravel-multilingual": "2.3.5"
+        "careem/laravel-multilingual": "2.3.6"
     },
     "require-dev": {
         "phpunit/phpunit" : "~6.0",
