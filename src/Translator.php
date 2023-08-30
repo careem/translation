@@ -62,7 +62,7 @@ class Translator extends LaravelTranslator {
      * @param  string|null  $locale
      * @return array
      */
-    private function localeArray($locale)
+    protected function localeArray($locale)
     {
         $locales = [$locale ?: $this->locale];
 
