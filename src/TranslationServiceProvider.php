@@ -1,8 +1,8 @@
 <?php
 namespace Waavi\Translation;
 
+use Illuminate\Support\ServiceProvider;
 use Illuminate\Translation\FileLoader as LaravelFileLoader;
-use Illuminate\Translation\TranslationServiceProvider as LaravelTranslationServiceProvider;
 use Waavi\Translation\Cache\RepositoryFactory as CacheRepositoryFactory;
 use Waavi\Translation\Commands\CacheFlushCommand;
 use Waavi\Translation\Commands\FileLoaderCommand;
@@ -11,13 +11,63 @@ use Waavi\Translation\Loaders\DatabaseLoader;
 use Waavi\Translation\Loaders\FileLoader;
 use Waavi\Translation\Loaders\MixedLoader;
 use Waavi\Translation\Middleware\TranslationMiddleware;
-use Waavi\Translation\Models\Translation;
 use Waavi\Translation\Repositories\LanguageRepository;
 use Waavi\Translation\Repositories\TranslationRepository;
 use Waavi\Translation\Routes\ResourceRegistrar;
 
-class TranslationServiceProvider extends LaravelTranslationServiceProvider
+class TranslationServiceProvider extends ServiceProvider
 {
+    /**
+     * Indicates if loading of the provider is deferred.
+     *
+     * @var bool
+     */
+    protected $defer = true;
+
+    /**
+     * Register the service provider.
+     *
+     * @return void
+     */
+    public function register()
+    {
+        $this->mergeConfigFrom(__DIR__ . '/../config/translator.php', 'translator');
+        $this->registerLoader();
+
+        $this->app->singleton('translator', function ($app) {
+            $loader = $app['translation.loader'];
+
+            // When registering the translator component, we'll need to set the default
+            // locale as well as the fallback locale. So, we'll grab the application
+            // configuration so we can easily get both of these values from there.
+            $locale = $app['config']['app.locale'];
+
+            $trans = new Translator($loader, $locale);
+
+            $trans->setFallback($app['config']['app.fallback_locale']);
+
+            return $trans;
+        });
+
+        $this->registerCacheRepository();
+        $this->registerFileLoader();
+        $this->registerCacheFlusher();
+        $this->app->singleton('translation.uri.localizer', UriLocalizer::class);
+        $this->app[\Illuminate\Routing\Router::class]->aliasMiddleware('localize', TranslationMiddleware::class);
+        // Fix issue with laravel prepending the locale to localize resource routes:
+        $this->app->bind('Illuminate\Routing\ResourceRegistrar', ResourceRegistrar::class);
+    }
+
+    /**
+     * Get the services provided by the provider.
+     *
+     * @return array
+     */
+    public function provides()
+    {
+        return ['translator', 'translation.loader', 'translation.cache.repository', 'translation.uri.localizer'];
+    }
+
     /**
      * Bootstrap the application events.
      *
@@ -29,35 +79,6 @@ class TranslationServiceProvider extends LaravelTranslationServiceProvider
             __DIR__ . '/../config/translator.php' => config_path('translator.php'),
         ]);
         $this->loadMigrationsFrom(__DIR__ . '/../database/migrations/');
-    }
-
-    /**
-     * Register the service provider.
-     *
-     * @return void
-     */
-    public function register()
-    {
-        $this->mergeConfigFrom(__DIR__ . '/../config/translator.php', 'translator');
-
-        parent::register();
-        $this->registerCacheRepository();
-        $this->registerFileLoader();
-        $this->registerCacheFlusher();
-        $this->app->singleton('translation.uri.localizer', UriLocalizer::class);
-        $this->app[\Illuminate\Routing\Router::class]->aliasMiddleware('localize', TranslationMiddleware::class);
-        // Fix issue with laravel prepending the locale to localize resource routes:
-        $this->app->bind('Illuminate\Routing\ResourceRegistrar', ResourceRegistrar::class);
-    }
-
-    /**
-     *  IOC alias provided by this Service Provider.
-     *
-     *  @return array
-     */
-    public function provides()
-    {
-        return array_merge(parent::provides(), ['translation.cache.repository', 'translation.uri.localizer', 'translation.loader']);
     }
 
     /**
