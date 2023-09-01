@@ -66,7 +66,7 @@ class Translator extends LaravelTranslator {
     {
         $locales = [$locale ?: $this->locale];
 
-        $parentLocale = $this->getParentLocale($locale);
+        $parentLocale = $this->getParentLocale($this->locale);
         if ($parentLocale) {
             $locales[] = $parentLocale;
         }
