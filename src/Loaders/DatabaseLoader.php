@@ -8,6 +8,7 @@ class DatabaseLoader extends Loader
      *  The default locale.
      *  @var string
      */
+    #[\Override]
     protected $defaultLocale;
 
     /**
@@ -41,7 +42,7 @@ class DatabaseLoader extends Loader
         $dotArray = $this->translationRepository->loadSource($locale, $namespace, $group);
         $undot    = [];
         foreach ($dotArray as $item => $text) {
-            array_set($undot, $item, $text);
+            \Illuminate\Support\Arr::set($undot, $item, $text);
         }
         return $undot;
     }

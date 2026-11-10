@@ -6,6 +6,7 @@ class MixedLoader extends Loader
      *  The default locale.
      *  @var string
      */
+    #[\Override]
     protected $defaultLocale;
 
     /**

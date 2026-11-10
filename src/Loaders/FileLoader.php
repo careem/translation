@@ -9,6 +9,7 @@ class FileLoader extends Loader
      *
      * @var string
      */
+    #[\Override]
     protected $defaultLocale;
 
     /**

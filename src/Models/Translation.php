@@ -8,12 +8,14 @@ class Translation extends Model
      *  Table name in the database.
      *  @var string
      */
+    #[\Override]
     protected $table = 'translator_translations';
 
     /**
      *  List of variables that can be mass assigned
      *  @var array
      */
+    #[\Override]
     protected $fillable = ['locale', 'namespace', 'group', 'item', 'text', 'unstable'];
 
     /**
@@ -57,6 +59,6 @@ class Translation extends Model
      */
     public function isLocked()
     {
-        return (boolean) $this->locked;
+        return (bool) $this->locked;
     }
 }

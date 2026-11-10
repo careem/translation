@@ -7,22 +7,20 @@ use \Mockery;
 
 class FileLoaderTest extends TestCase
 {
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
         $this->laravelLoader = Mockery::mock(LaravelFileLoader::class);
         $this->fileLoader    = new FileLoader('en', $this->laravelLoader);
     }
 
-    public function tearDown()
+    public function tearDown(): void
     {
         Mockery::close();
         parent::tearDown();
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function it_returns_from_file()
     {
         $data = [

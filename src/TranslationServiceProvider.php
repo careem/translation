@@ -31,6 +31,7 @@ class TranslationServiceProvider extends ServiceProvider
      */
     public function register()
     {
+        $this->app->register(\Illuminate\Translation\TranslationServiceProvider::class);
         $this->mergeConfigFrom(__DIR__ . '/../config/translator.php', 'translator');
         $this->registerLoader();
 
@@ -146,14 +147,13 @@ class TranslationServiceProvider extends ServiceProvider
      */
     protected function registerFileLoader()
     {
-        $app                   = $this->app;
-        $defaultLocale         = $app['config']->get('app.locale');
-        $languageRepository    = $app->make(LanguageRepository::class);
-        $translationRepository = $app->make(TranslationRepository::class);
-        $translationsPath      = $app->basePath() . '/resources/lang';
-        $command               = new FileLoaderCommand($languageRepository, $translationRepository, $app['files'], $translationsPath, $defaultLocale);
-
-        $this->app['command.translator:load'] = $command;
+        $this->app->singleton('command.translator:load', function ($app) {
+            return new FileLoaderCommand(
+                $app->make(LanguageRepository::class),
+                $app->make(TranslationRepository::class),
+                $app['files'], $app->basePath().'/resources/lang', $app['config']->get('app.locale')
+            );
+        });
         $this->commands('command.translator:load');
     }
 
@@ -164,11 +164,9 @@ class TranslationServiceProvider extends ServiceProvider
      */
     public function registerCacheFlusher()
     {
-        //$cacheStore      = $this->app['cache']->getStore();
-        //$cacheRepository = CacheRepositoryFactory::make($cacheStore, $this->app['config']->get('translator.cache.suffix'));
-        $command = new CacheFlushCommand($this->app['translation.cache.repository'], $this->app['config']->get('translator.cache.enabled'));
-
-        $this->app['command.translator:flush'] = $command;
+        $this->app->singleton('command.translator:flush', function ($app) {
+            return new CacheFlushCommand($app['translation.cache.repository'], $app['config']->get('translator.cache.enabled'));
+        });
         $this->commands('command.translator:flush');
     }
 }

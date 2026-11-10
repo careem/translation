@@ -94,10 +94,10 @@ class UriLocalizer
     {
         $parsedUrl             = parse_url($url);
         $parsedUrl['segments'] = array_values(array_filter(explode('/', $parsedUrl['path']), 'strlen'));
-        $localeCandidate       = array_get($parsedUrl['segments'], $segment, false);
+        $localeCandidate       = \Illuminate\Support\Arr::get($parsedUrl['segments'], $segment, false);
         $parsedUrl['locale']   = in_array($localeCandidate, $this->availableLocales) ? $localeCandidate : null;
-        $parsedUrl['query']    = array_get($parsedUrl, 'query', false);
-        $parsedUrl['fragment'] = array_get($parsedUrl, 'fragment', false);
+        $parsedUrl['query']    = \Illuminate\Support\Arr::get($parsedUrl, 'query', false);
+        $parsedUrl['fragment'] = \Illuminate\Support\Arr::get($parsedUrl, 'fragment', false);
         unset($parsedUrl['path']);
         return $parsedUrl;
     }

@@ -7,7 +7,7 @@ use Waavi\Translation\Test\TestCase;
 
 class LoadTest extends TestCase
 {
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
         $this->languageRepository    = \App::make(LanguageRepository::class);
@@ -16,9 +16,7 @@ class LoadTest extends TestCase
         $this->command               = new FileLoaderCommand($this->languageRepository, $this->translationRepository, \App::make('files'), $translationsPath, 'en');
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function it_loads_files_into_database()
     {
         $file = realpath(__DIR__ . '/../lang/en/auth.php');
@@ -46,9 +44,7 @@ class LoadTest extends TestCase
         $this->assertEquals('Simple', $translations[2]->text);
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function it_loads_files_in_subdirectories_into_database()
     {
         $directory = realpath(__DIR__ . '/../lang/es');
@@ -70,9 +66,7 @@ class LoadTest extends TestCase
         $this->assertEquals('Identifícate', $translations[1]->text);
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function it_doesnt_load_undefined_locales()
     {
         $this->command->fire();
@@ -82,9 +76,7 @@ class LoadTest extends TestCase
         $this->assertFalse(in_array('ca', $locales));
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function it_loads_overwritten_vendor_files_correctly()
     {
         $this->command->fire();
@@ -106,9 +98,7 @@ class LoadTest extends TestCase
         $this->assertEquals('Texto proveedor', $translations[8]->text);
     }
 
-    /**
-     *  @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function it_doesnt_overwrite_locked_translations()
     {
         $trans = $this->translationRepository->create([
@@ -140,9 +130,7 @@ class LoadTest extends TestCase
         $this->assertEquals('Login', $translations[1]->text);
     }
 
-    /**
-     *  @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function it_doesnt_load_empty_arrays()
     {
         $file = realpath(__DIR__ . '/../lang/en/empty.php');

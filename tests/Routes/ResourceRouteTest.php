@@ -10,7 +10,7 @@ use \Mockery;
 
 class ResourceRouteTest extends TestCase
 {
-    public function setUp()
+    public function setUp(): void
     {
         // During the parent's setup, both a 'es' 'Spanish' and 'en' 'English' languages are inserted into the database.
         parent::setUp();
@@ -28,15 +28,13 @@ class ResourceRouteTest extends TestCase
         return $method;
     }
 
-    public function tearDown()
+    public function tearDown(): void
     {
         Mockery::close();
         parent::tearDown();
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function test_group_resource_name_filters_out_locales()
     {
         $this->router->shouldReceive('getLastGroupPrefix')->andReturn('en/admin/blog');
@@ -46,9 +44,7 @@ class ResourceRouteTest extends TestCase
         $this->assertEquals('admin.blog.post.index', $result);
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function test_group_resource_name_doesnt_mess_with_prefixes_containing_part_of_the_locale()
     {
         $this->router->shouldReceive('getLastGroupPrefix')->andReturn('en/enabled/enabler');
@@ -58,9 +54,7 @@ class ResourceRouteTest extends TestCase
         $this->assertEquals('enabled.enabler.women.index', $result);
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function test_only_locale_prefix()
     {
         $this->router->shouldReceive('getLastGroupPrefix')->andReturn('en');
@@ -70,9 +64,7 @@ class ResourceRouteTest extends TestCase
         $this->assertEquals('post.index', $result);
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function test_no_locale_prefix()
     {
         $this->router->shouldReceive('getLastGroupPrefix')->andReturn('admin');
@@ -82,9 +74,7 @@ class ResourceRouteTest extends TestCase
         $this->assertEquals('admin.post.index', $result);
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function test_no_prefix()
     {
         $this->router->shouldReceive('getLastGroupPrefix')->andReturn('');

@@ -9,15 +9,13 @@ use Waavi\Translation\Test\TestCase;
 
 class RepositoryFactoryTest extends TestCase
 {
-    public function setUp()
+    public function setUp(): void
     {
         // During the parent's setup, both a 'es' 'Spanish' and 'en' 'English' languages are inserted into the database.
         parent::setUp();
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function test_returns_simple_cache_if_non_taggable_store()
     {
         $store = new FileStore(\App::make('files'), __DIR__ . '/temp');
@@ -25,9 +23,7 @@ class RepositoryFactoryTest extends TestCase
         $this->assertEquals(SimpleRepository::class, get_class($repo));
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function test_returns_simple_cache_if_taggable_store()
     {
         $store = new ArrayStore;

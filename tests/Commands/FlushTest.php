@@ -5,21 +5,19 @@ use Waavi\Translation\Test\TestCase;
 
 class FlushTest extends TestCase
 {
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
         $this->cacheRepository = \App::make('translation.cache.repository');
     }
 
-    public function tearDown()
+    public function tearDown(): void
     {
         parent::tearDown();
         Mockery::close();
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function it_does_nothing_if_cache_disabled()
     {
         $this->cacheRepository->put('en', 'group', 'namespace', 'value', 60);
@@ -30,9 +28,7 @@ class FlushTest extends TestCase
         $this->assertTrue($this->cacheRepository->has('en', 'group', 'namespace'));
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function it_flushes_the_cache()
     {
         $this->cacheRepository->put('en', 'group', 'namespace', 'value', 60);

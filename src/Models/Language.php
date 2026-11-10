@@ -10,12 +10,14 @@ class Language extends Model
      *  Table name in the database.
      *  @var string
      */
+    #[\Override]
     protected $table = 'translator_languages';
 
     /**
      *  List of variables that cannot be mass assigned
      *  @var array
      */
+    #[\Override]
     protected $fillable = ['locale', 'name'];
 
     /**

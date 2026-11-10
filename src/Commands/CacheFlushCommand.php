@@ -10,6 +10,7 @@ class CacheFlushCommand extends Command
      *
      * @var string
      */
+    #[\Override]
     protected $name = 'translator:flush';
 
     /**
@@ -17,6 +18,7 @@ class CacheFlushCommand extends Command
      *
      * @var string
      */
+    #[\Override]
     protected $description = "Flush the translation cache.";
 
     /**
