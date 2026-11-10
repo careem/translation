@@ -63,7 +63,7 @@ class SimpleRepository implements CacheRepositoryInterface
     public function put($locale, $group, $namespace, $content, $minutes)
     {
         $key = $this->getKey($locale, $group, $namespace);
-        $this->store->put($key, $content, $minutes);
+        $this->store->put($key, $content, $minutes * 60);
     }
 
     /**

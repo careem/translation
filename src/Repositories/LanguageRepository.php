@@ -86,7 +86,7 @@ class LanguageRepository extends Repository
      */
     public function update(array $attributes)
     {
-        return $this->validate($attributes) ? (boolean) Language::where('id', $attributes['id'])->update($attributes) : false;
+        return $this->validate($attributes) ? (bool) Language::where('id', $attributes['id'])->update($attributes) : false;
     }
 
     /**
@@ -177,7 +177,7 @@ class LanguageRepository extends Repository
      */
     public function validate(array $attributes)
     {
-        $id    = array_get($attributes, 'id', 'NULL');
+        $id    = \Illuminate\Support\Arr::get($attributes, 'id', 'NULL');
         $table = $this->model->getTable();
         $rules = [
             'locale' => "required|unique:{$table},locale,{$id}",

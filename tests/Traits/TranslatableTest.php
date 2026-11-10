@@ -11,7 +11,7 @@ use Waavi\Translation\Traits\Translatable;
 class TranslatableTest extends TestCase
 {
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
         \Schema::create('dummies', function ($table) {
@@ -27,9 +27,7 @@ class TranslatableTest extends TestCase
         $this->translationRepository = \App::make(TranslationRepository::class);
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function it_saves_translations()
     {
         $dummy        = new Dummy;
@@ -53,9 +51,7 @@ class TranslatableTest extends TestCase
         $this->assertEquals(0, $this->translationRepository->count());
     }
 
-    /**
-     * @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function it_flushes_cache()
     {
         $cacheMock = Mockery::mock(\Waavi\Translation\Cache\SimpleRepository::class);
@@ -68,9 +64,7 @@ class TranslatableTest extends TestCase
         $this->assertTrue($saved);
     }
 
-    /**
-     *  @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function to_array_features_translated_attributes()
     {
         $dummy = Dummy::create(['title' => 'Dummy title', 'text' => 'Dummy text']);

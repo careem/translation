@@ -165,7 +165,7 @@ class TranslationRepository extends Repository
     public function loadArray(array $lines, $locale, $group, $namespace = '*')
     {
         // Transform the lines into a flat dot array:
-        $lines = array_dot($lines);
+        $lines = \Illuminate\Support\Arr::dot($lines);
         foreach ($lines as $item => $text) {
             if (is_string($text)) {
                 // Check if the entry exists in the database:
@@ -409,9 +409,9 @@ class TranslationRepository extends Repository
     public function validate(array $attributes)
     {
         $table     = $this->model->getTable();
-        $locale    = array_get($attributes, 'locale', '');
-        $namespace = array_get($attributes, 'namespace', '');
-        $group     = array_get($attributes, 'group', '');
+        $locale    = \Illuminate\Support\Arr::get($attributes, 'locale', '');
+        $namespace = \Illuminate\Support\Arr::get($attributes, 'namespace', '');
+        $group     = \Illuminate\Support\Arr::get($attributes, 'group', '');
         $rules     = [
             'locale'    => 'required',
             'namespace' => 'required',

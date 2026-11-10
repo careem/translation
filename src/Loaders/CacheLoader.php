@@ -9,6 +9,7 @@ class CacheLoader extends Loader
      *
      * @var string
      */
+    #[\Override]
     protected $defaultLocale;
 
     /**

@@ -12,6 +12,7 @@ class FileLoaderCommand extends Command
      *
      * @var string
      */
+    #[\Override]
     protected $name = 'translator:load';
 
     /**
@@ -19,6 +20,7 @@ class FileLoaderCommand extends Command
      *
      * @var string
      */
+    #[\Override]
     protected $description = "Load language files into the database.";
 
     /**

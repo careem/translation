@@ -7,7 +7,7 @@ use \Mockery;
 
 class LoadTest extends TestCase
 {
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
         $this->laravelLoader = Mockery::mock(LaravelFileLoader::class);
@@ -15,16 +15,14 @@ class LoadTest extends TestCase
         $this->fileLoader = new FileLoader('en', $this->laravelLoader);
     }
 
-    public function tearDown()
+    public function tearDown(): void
     {
         Mockery::close();
         parent::tearDown();
     }
 
-    /**
-     * @test
-     */
-    public function it_merges_default_and_target_locales()
+    #[\PHPUnit\Framework\Attributes\Test]
+    public function it_preserves_careem_target_locale_without_fallback_merge()
     {
         $en = [
             'simple' => 'Simple',
@@ -39,21 +37,14 @@ class LoadTest extends TestCase
                 'one' => 'OverFirst',
             ],
         ];
-        $expected = [
-            'simple' => 'OverSimple',
-            'nested' => [
-                'one' => 'OverFirst',
-                'two' => 'Second',
-            ],
-        ];
+        // Careem intentionally disabled fallback merging in Loader::load before this upgrade.
+        $expected = $es;
         $this->laravelLoader->shouldReceive('load')->with('en', 'group', 'name')->andReturn($en);
         $this->laravelLoader->shouldReceive('load')->with('es', 'group', 'name')->andReturn($es);
         $this->assertEquals($expected, $this->fileLoader->load('es', 'group', 'name'));
     }
 
-    /**
-     *  @test
-     */
+    #[\PHPUnit\Framework\Attributes\Test]
     public function it_returns_translation_code_if_text_not_found()
     {
         $this->assertEquals('auth.code', trans('auth.code'));
